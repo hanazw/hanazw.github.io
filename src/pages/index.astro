@@ -1,16 +1,203 @@
 ---
+import BaseLayout from "../layouts/base_layout.astro";
+import ProjectCard from "../components/project_card.astro";
+
+const projects = [
+	{
+		title: "HmxsRenderer",
+		desc: "A C++ software renderer with an interactive Win32 window, custom shaders, and forward and deferred rendering paths.",
+		href: "https://github.com/hmxsqaq/Graphics-HmxsRenderer",
+		category: "Graphics · C++20 / Win32",
+		linkLabel: "View repository",
+	},
+	{
+		title: "AssAssIn",
+		desc: "A two-player Unity party game. My contributions included UI, enemy AI, tutorial logic, and visual and audio feedback.",
+		href: "https://hmxsqaq.github.io/projects/assassin.html",
+		category: "Team project · Unity / C#",
+		linkLabel: "Read project write-up",
+	},
+	{
+		title: "World Piece",
+		desc: "A shape-manipulation puzzle game for GMTK Game Jam 2024. I was the sole programmer, implementing the game in Unity.",
+		href: "https://hmxsqaq.github.io/projects/world_piece.html",
+		category: "Game jam · Unity / C#",
+		linkLabel: "Read project write-up",
+	},
+	{
+		title: "Procedural Terrain",
+		desc: "An exploration of Perlin noise in Unity and C#, from the underlying algorithm to 2D tilemaps and 3D terrain.",
+		href: "https://hmxsqaq.github.io/projects/procedural_terrain_generation.html",
+		category: "Procedural generation · Unity / C#",
+		linkLabel: "Read project write-up",
+	},
+];
+
+const writings = [
+	{
+		title: "Reflection in C#",
+		desc: "Notes on reflection and its use in Unity and game development.",
+		href: "https://hmxsqaq.github.io/blogs/reflection_in_csharp.html",
+		language: "English",
+		lang: "en",
+	},
+	{
+		title: "「GAMES101」学习笔记",
+		desc: "Notes from studying the fundamentals of computer graphics.",
+		href: "https://hmxs.games/posts/13001/",
+		language: "中文",
+		lang: "zh-CN",
+	},
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="hana — Game Developer">
+	<section aria-labelledby="intro-heading" class="py-16 md:py-24">
+		<p class="text-sm font-medium tracking-wide text-[var(--text-muted)]">
+			Game development · Computer graphics
+		</p>
+		<h1 id="intro-heading" class="mt-5 text-7xl font-semibold leading-none tracking-tight sm:text-8xl md:text-9xl">
+			hana<span aria-hidden="true" class="text-[var(--text-muted)]">.</span>
+		</h1>
+		<p class="mt-8 max-w-2xl text-2xl leading-snug tracking-tight sm:text-3xl">
+			A game developer working with Unity, C++, and computer graphics.
+		</p>
+		<p class="mt-5 max-w-xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg">
+			I’m pursuing a master’s in Computer Science at NYU Courant.
+			Here, I share my projects and write about the technical ideas behind them.
+		</p>
+		<div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+			<a
+				href="#projects"
+				class="hero-action hero-action-primary"
+			>
+				View Projects <span aria-hidden="true">↓</span>
+			</a>
+			<a href="/about/" class="hero-action hero-action-secondary">
+				About Me <span aria-hidden="true">↗</span>
+			</a>
+		</div>
+	</section>
+
+	<section id="projects" aria-labelledby="projects-heading" class="scroll-mt-8 border-t border-[var(--border-color)] pt-10 pb-16 md:pb-24">
+		<h2 id="projects-heading" class="text-2xl font-semibold tracking-tight">Selected Projects</h2>
+		<p class="mt-3 max-w-xl text-[var(--text-muted)]">Rendering experiments, collaborative games, and procedural worlds.</p>
+
+		<div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+			{projects.map((project) => (
+				<ProjectCard
+					desc={project.desc}
+					href={project.href}
+					title={project.title}
+					category={project.category}
+					linkLabel={project.linkLabel}
+				/>
+			))}
+		</div>
+		<a class="archive-link mt-6" href="https://hmxsqaq.github.io/projects/">Browse the project archive <span aria-hidden="true">↗</span></a>
+	</section>
+
+	<section aria-labelledby="writing-heading" class="border-t border-[var(--border-color)] pt-10 pb-16 md:pb-24">
+		<h2 id="writing-heading" class="text-2xl font-semibold tracking-tight">Writing &amp; Notes</h2>
+		<p class="mt-3 max-w-xl text-[var(--text-muted)]">Technical notes in English and Chinese, collected as I learn and build.</p>
+		<ul class="mt-6">
+			{writings.map((writing) => (
+				<li class="writing-item">
+					<a href={writing.href} class="writing-link">
+						<div>
+							<h3 lang={writing.lang} class="text-lg font-medium">{writing.title}</h3>
+							<p class="mt-2 text-sm text-[var(--text-muted)]">{writing.desc}</p>
+						</div>
+						<span class="writing-language" lang={writing.lang}>{writing.language} <span aria-hidden="true">↗</span></span>
+					</a>
+				</li>
+			))}
+		</ul>
+		<a class="archive-link mt-6" href="https://hmxs.games/">Browse the Chinese blog <span aria-hidden="true">↗</span></a>
+	</section>
+</BaseLayout>
+
+<style>
+	.archive-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		min-height: 2.75rem;
+		font-size: 0.875rem;
+		text-decoration: underline;
+		text-underline-offset: 0.25rem;
+		text-decoration-color: var(--border-color);
+	}
+
+	.writing-item + .writing-item {
+		border-top: 1px solid var(--border-color);
+	}
+
+	.writing-link {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem 2rem;
+		padding-block: 1.5rem;
+	}
+
+	.writing-language {
+		flex-shrink: 0;
+		font-size: 0.875rem;
+		color: var(--text-muted);
+	}
+
+	.archive-link:focus-visible,
+	.writing-link:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 4px;
+	}
+
+	.hero-action {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		font-weight: 500;
+	}
+
+	.hero-action-primary {
+		gap: 0.75rem;
+		padding: 0.625rem 1.25rem;
+		border: 1px solid var(--border-color);
+		border-radius: 0.375rem;
+	}
+
+	.hero-action-secondary {
+		gap: 0.5rem;
+		text-decoration: underline;
+		text-decoration-color: var(--border-color);
+		text-underline-offset: 0.25rem;
+	}
+
+	.hero-action:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 4px;
+	}
+
+	@media (hover: hover) {
+		.archive-link:hover {
+			text-decoration-color: currentColor;
+		}
+
+		.writing-link:hover h3 {
+			text-decoration: underline;
+			text-underline-offset: 0.25rem;
+		}
+
+		.hero-action-primary:hover {
+			background-color: var(--surface-hover);
+		}
+
+		.hero-action-secondary:hover {
+			text-decoration-color: currentColor;
+		}
+	}
+</style>

@@ -1,0 +1,58 @@
+---
+interface Props {
+    title: string;
+    desc: string;
+    href: string;
+    category: string;
+    linkLabel: string;
+}
+
+const { title, desc, href, category, linkLabel } = Astro.props;
+---
+
+<a
+    href={href}
+    class="project-card"
+>
+    <p class="text-xs leading-relaxed text-[var(--text-muted)]">{category}</p>
+    <h3 class="mt-3 text-xl font-semibold tracking-tight">{title}</h3>
+    <p class="mt-3 leading-relaxed text-[var(--text-muted)]">{desc}</p>
+    <span class="project-link">{linkLabel} <span aria-hidden="true">↗</span></span>
+</a>
+
+<style>
+    .project-card {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+    }
+
+    .project-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: auto;
+        padding-top: 1.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .project-card:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 4px;
+    }
+
+    @media (hover: hover) {
+        .project-card:hover {
+            background-color: var(--surface-hover);
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .project-card {
+            transition: background-color 150ms ease;
+        }
+    }
+</style>

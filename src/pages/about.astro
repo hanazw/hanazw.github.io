@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/base_layout.astro"
+---
+
+<BaseLayout title="About — hana">
+    <section class="max-w-2xl py-12 md:py-20" aria-labelledby="about-heading">
+        <p class="text-sm text-[var(--text-muted)]">About</p>
+        <h1 id="about-heading" class="mt-4 text-5xl font-semibold tracking-tight sm:text-6xl">Hi, I’m hana.</h1>
+        <p class="mt-6 text-xl leading-relaxed">I’m Zehua Wu, a game developer and an M.S. in Computer Science student at NYU Courant.</p>
+        <p class="mt-5 leading-relaxed text-[var(--text-muted)]">My work spans C++ and C#, software rendering, and games built with Unity. I’m interested in computer graphics, interactive media, and how technical systems shape the experience of playing a game.</p>
+
+        <div class="mt-12 border-t border-[var(--border-color)] pt-8">
+            <h2 class="text-2xl font-semibold tracking-tight">What I build</h2>
+            <p class="mt-4 leading-relaxed text-[var(--text-muted)]">My projects range from a C++ software renderer to collaborative party games and game jam experiments. On AssAssIn, I worked on UI, enemy AI, tutorials, and gameplay feedback. For World Piece, I was the sole programmer on the Unity project.</p>
+            <a class="about-link mt-4" href="/#projects">Explore selected projects <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="mt-10 border-t border-[var(--border-color)] pt-8">
+            <h2 class="text-2xl font-semibold tracking-tight">Writing as I learn</h2>
+            <p class="mt-4 leading-relaxed text-[var(--text-muted)]">I keep technical notes in English and Chinese on graphics, programming, and game development. You’ll find my earlier projects and writing under the names hmxs and hmxsqaq.</p>
+            <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+                <a class="about-link" href="https://hmxs.games/">Chinese blog <span aria-hidden="true">↗</span></a>
+                <a class="about-link" href="https://hmxsqaq.github.io/">Portfolio archive <span aria-hidden="true">↗</span></a>
+                <a class="about-link" href="https://github.com/hmxsqaq">GitHub <span aria-hidden="true">↗</span></a>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .about-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 2.75rem;
+        font-size: 0.875rem;
+        text-decoration: underline;
+        text-underline-offset: 0.25rem;
+        text-decoration-color: var(--border-color);
+    }
+
+    .about-link:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 4px;
+    }
+
+    @media (hover: hover) {
+        .about-link:hover {
+            text-decoration-color: currentColor;
+        }
+    }
+</style>
