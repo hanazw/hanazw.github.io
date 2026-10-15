@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/base_layout.astro";
 import ProjectCard from "../components/project_card.astro";
+import HeroVisual from "../components/hero_visual.astro";
 
 const projects = [
 	{
@@ -52,30 +53,33 @@ const writings = [
 ---
 
 <BaseLayout title="hana — Game Developer">
-	<section aria-labelledby="intro-heading" class="py-16 md:py-24">
-		<p class="text-sm font-medium tracking-wide text-[var(--text-muted)]">
-			Game development · Computer graphics
-		</p>
-		<h1 id="intro-heading" class="mt-5 text-7xl font-semibold leading-none tracking-tight sm:text-8xl md:text-9xl">
-			hana<span aria-hidden="true" class="text-[var(--text-muted)]">.</span>
-		</h1>
-		<p class="mt-8 max-w-2xl text-2xl leading-snug tracking-tight sm:text-3xl">
-			A game developer working with Unity, C++, and computer graphics.
-		</p>
-		<p class="mt-5 max-w-xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg">
-			I’m pursuing a master’s in Computer Science at NYU Courant.
-			Here, I share my projects and write about the technical ideas behind them.
-		</p>
-		<div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
-			<a
-				href="#projects"
-				class="hero-action hero-action-primary"
-			>
-				View Projects <span aria-hidden="true">↓</span>
-			</a>
-			<a href="/about/" class="hero-action hero-action-secondary">
-				About Me <span aria-hidden="true">↗</span>
-			</a>
+	<section aria-labelledby="intro-heading" class="hero py-16 md:py-24" data-hero>
+		<HeroVisual />
+		<div class="hero-content">
+			<p class="text-sm font-medium tracking-wide text-[var(--text-muted)]">
+				Game development · Computer graphics
+			</p>
+			<h1 id="intro-heading" class="mt-5 text-7xl font-semibold leading-none tracking-tight sm:text-8xl md:text-9xl">
+				hana<span aria-hidden="true" class="text-[var(--text-muted)]">.</span>
+			</h1>
+			<p class="mt-8 text-2xl leading-snug tracking-tight sm:text-3xl">
+				A game developer working with Unity, C++, and computer graphics.
+			</p>
+			<p class="mt-5 max-w-lg text-base leading-relaxed text-[var(--text-muted)] sm:text-lg">
+				I’m pursuing a master’s in Computer Science at NYU Courant.
+				Here, I share my projects and write about the technical ideas behind them.
+			</p>
+			<div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+				<a
+					href="#projects"
+					class="hero-action hero-action-primary"
+				>
+					View Projects <span aria-hidden="true">↓</span>
+				</a>
+				<a href="/about/" class="hero-action hero-action-secondary">
+					About Me <span aria-hidden="true">↗</span>
+				</a>
+			</div>
 		</div>
 	</section>
 
@@ -118,6 +122,25 @@ const writings = [
 </BaseLayout>
 
 <style>
+	.hero {
+		position: relative;
+		isolation: isolate;
+		/* 对应 main 上方的 mt-12，让背景与上下分隔线保持相同间距。 */
+		margin-bottom: 3rem;
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 1;
+		max-width: 36rem;
+	}
+
+	@media (min-width: 48rem) {
+		.hero-content {
+			width: 60%;
+		}
+	}
+
 	.archive-link {
 		display: inline-flex;
 		align-items: center;
