@@ -1,0 +1,79 @@
+---
+import BaseLayout from './base_layout.astro';
+import type { MarkdownHeading } from 'astro';
+import TableOfContents from '../components/table_of_contents.astro';
+import Icon from '../components/icon.astro';
+import { get_content_url, type ContentEntry } from '../lib/content';
+import { format_date, html_languages, language_names, languages, local_path } from '../i18n/config';
+import { get_tag_label } from '../i18n/tags';
+import { ui } from '../i18n/ui';
+import 'katex/dist/katex.min.css';
+import '../styles/prose.css';
+
+interface Props { entry: ContentEntry; translations: ContentEntry[]; headings: MarkdownHeading[] }
+const { entry, translations, headings } = Astro.props;
+const { data, collection } = entry;
+const lang = data.lang;
+const text = ui[lang];
+const alternates = [{ lang, href: get_content_url(entry) },
+  ...translations.map(translation => ({ lang: translation.data.lang, href: get_content_url(translation) }))];
+const has_toc = headings.length >= 8 && headings.filter(heading => heading.depth === 2).length >= 3;
+const availability = text.versions_available.replace('{available}', String(alternates.length)).replace('{total}', String(languages.length));
+---
+
+<BaseLayout title={`${data.title} — hana`} description={data.description} lang={lang} section={collection} alternates={alternates} is_detail>
+  <article class:list={['reading-article', { 'has-toc': has_toc }]} data-reading
+    data-copy={text.copy} data-copied={text.copied} data-copy-failed={text.copy_failed}
+    data-section-link={text.section_link} data-open-image={text.open_image}>
+    <header class="article-header">
+      <a class="text-sm text-[var(--text-muted)] underline underline-offset-4" href={local_path(lang, collection)}>← {collection === 'blog' ? text.back_blog : text.back_projects}</a>
+      <h1 class="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{data.title}</h1>
+      <p class="mt-4 leading-relaxed text-[var(--text-muted)]">{data.description}</p>
+      <div class="article-meta">
+      {entry.collection === 'blog' && <>
+        <span>{text.published} <time datetime={entry.data.published_date}>{format_date(entry.data.published_date, lang)}</time></span>
+        {entry.data.updated_date && <span>{text.updated} <time datetime={entry.data.updated_date}>{format_date(entry.data.updated_date, lang)}</time></span>}
+      </>}
+      {data.tags.map(tag => <span>{get_tag_label(tag, lang)}</span>)}
+      {translations.map(translation => <a href={get_content_url(translation)} lang={html_languages[translation.data.lang]} class="underline underline-offset-4">{language_names[translation.data.lang]} →</a>)}
+      {alternates.length < languages.length && <span class="translation-availability">{availability}</span>}
+      </div>
+    </header>
+    <div class:list={['reading-body', { 'with-toc': has_toc }]}>
+      {has_toc && <TableOfContents headings={headings} label={text.toc}/>}
+      <div class="prose"><slot/></div>
+    </div>
+    <footer class="article-footer"><a href={local_path(lang, collection)}>← {collection === 'blog' ? text.back_blog : text.back_projects}</a></footer>
+  </article>
+  <dialog id="image-viewer" class="image-viewer" aria-label={text.open_image}>
+    <button type="button" class="image-close" aria-label={text.close_image} title={text.close_image} autofocus><Icon name="close" size={22}/></button>
+    <div class="image-stage"></div>
+    <button type="button" class="image-size" aria-pressed="false">{text.original_size}</button>
+    <p class="image-hint">{text.image_hint}</p>
+  </dialog>
+  <script>import '../scripts/reading';</script>
+</BaseLayout>
+<style>
+  .reading-article { max-width: 42rem; padding-block: .5rem 4rem; }
+  .article-header { max-width: 42rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: .4rem 1rem; align-items: baseline; margin-top: 1rem; font-size: .8125rem; line-height: 1.6; color: var(--text-muted); }
+  .translation-availability { font-size: .75rem; }
+  .prose { min-width: 0; }
+  .article-footer { max-width: 42rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: .875rem; color: var(--text-muted); }
+  .article-footer a { text-decoration: underline; text-underline-offset: .25em; }
+  .article-footer a:focus-visible, .article-meta a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  .image-viewer { width: calc(100vw - 2rem); max-width: 90rem; max-height: calc(100vh - 2rem); margin: auto; padding: 3rem 1rem 1rem; border: 1px solid var(--border-color); border-radius: .6rem; color: var(--text-primary); background: var(--page-bg); }
+  .image-viewer::backdrop { background: #000b; }
+  .image-stage { max-height: calc(100vh - 11rem); overflow: auto; }
+  .image-stage :global(img) { display: block; width: auto; max-width: 100%; max-height: calc(100vh - 11rem); margin: auto; cursor: zoom-in; }
+  .image-stage :global(img.actual-size) { max-width: none; max-height: none; cursor: zoom-out; }
+  .image-close { position: absolute; top: .25rem; right: .5rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; cursor: pointer; border-radius: .3rem; }
+  .image-close:hover { background: var(--surface-hover); }
+  .image-close:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
+  .image-hint { margin-top: .75rem; font-size: .75rem; text-align: center; color: var(--text-muted); }
+  .image-size { display: block; padding: .5rem 1rem; margin: .5rem auto 0; border: 1px solid var(--border-color); border-radius: .3rem; font-size: .8125rem; cursor: pointer; }
+  .image-size[aria-pressed='true'] { background: var(--surface-hover); }
+  .image-size:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  @media (min-width: 48rem) { .reading-article { padding-top: 1.5rem; } }
+  @media (min-width: 64rem) { .reading-article.has-toc { max-width: 57.5rem; } .reading-body.with-toc { display: grid; grid-template-columns: minmax(0, 42rem) minmax(0, 13rem); gap: 2.5rem; align-items: start; } .with-toc > .prose { grid-column: 1; grid-row: 1; } }
+</style>

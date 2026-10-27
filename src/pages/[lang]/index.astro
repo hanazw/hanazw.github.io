@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../../layouts/base_layout.astro';
+import ProjectCard from '../../components/project_card.astro';
+import HeroVisual from '../../components/hero_visual.astro';
+import { featured_projects, featured_writings, get_content_url, get_featured_entries, get_published_entries } from '../../lib/content';
+import { html_languages, language_names, languages, local_path, type ContentLanguage } from '../../i18n/config';
+import { get_tag_label } from '../../i18n/tags';
+import { ui } from '../../i18n/ui';
+
+export function getStaticPaths() { return languages.map(lang => ({ params: { lang }, props: { lang } })); }
+interface Props { lang: ContentLanguage }
+const { lang } = Astro.props;
+const text = ui[lang];
+const projects = get_featured_entries(await get_published_entries('projects'), featured_projects, lang);
+const writings = get_featured_entries(await get_published_entries('blog'), featured_writings, lang);
+const alternates = languages.map(language => ({ lang: language, href: local_path(language) }));
+---
+
+<BaseLayout title={text.home.title} description={text.home.description} lang={lang} alternates={alternates}>
+	<section aria-labelledby="intro-heading" class="hero py-16 md:py-24" data-hero>
+		<HeroVisual />
+		<div class="hero-content">
+			<p class="text-sm font-medium tracking-wide text-[var(--text-muted)]">
+				{text.home.eyebrow}
+			</p>
+			<h1 id="intro-heading" class="mt-5 text-7xl font-semibold leading-none tracking-tight sm:text-8xl md:text-9xl">
+				hana<span aria-hidden="true" class="text-[var(--text-muted)]">.</span>
+			</h1>
+			<p class="mt-8 text-2xl leading-snug tracking-tight sm:text-3xl">
+				{text.home.intro}
+			</p>
+			<p class="mt-5 max-w-lg text-base leading-relaxed text-[var(--text-muted)] sm:text-lg">
+				{text.home.description}
+			</p>
+			<div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+				<a
+					href="#projects"
+					class="hero-action hero-action-primary"
+				>
+					{text.home.view_projects} <span aria-hidden="true">↓</span>
+				</a>
+				<a href={local_path(lang, 'about')} class="hero-action hero-action-secondary">
+					{text.home.about_me} <span aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section id="projects" aria-labelledby="projects-heading" class="scroll-mt-8 border-t border-[var(--border-color)] pt-10 pb-16 md:pb-24">
+		<h2 id="projects-heading" class="text-2xl font-semibold tracking-tight">{text.home.selected}</h2>
+		<p class="mt-3 max-w-xl text-[var(--text-muted)]">{text.home.projects_description}</p>
+
+		<div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+			{projects.map((project) => (
+				<ProjectCard
+					desc={project.data.description}
+					href={get_content_url(project)}
+					title={project.data.title}
+					category={project.data.tags.map(tag => get_tag_label(tag, lang)).join(' · ')}
+					linkLabel={text.read_project}
+					lang={html_languages[project.data.lang]}
+					languageLabel={language_names[project.data.lang]}
+				/>
+			))}
+		</div>
+		<a class="archive-link mt-6" href={local_path(lang, 'projects')}>{text.all_projects} <span aria-hidden="true">↗</span></a>
+	</section>
+
+	<section aria-labelledby="writing-heading" class="border-t border-[var(--border-color)] pt-10 pb-16 md:pb-24">
+		<h2 id="writing-heading" class="text-2xl font-semibold tracking-tight">{text.home.writing}</h2>
+		<p class="mt-3 max-w-xl text-[var(--text-muted)]">{text.home.writing_description}</p>
+		<ul class="mt-6">
+			{writings.map((writing) => (
+				<li class="writing-item">
+					<a href={get_content_url(writing)} class="writing-link">
+						<div>
+							<h3 lang={html_languages[writing.data.lang]} class="text-lg font-medium">{writing.data.title}</h3>
+							<p lang={html_languages[writing.data.lang]} class="mt-2 text-sm text-[var(--text-muted)]">{writing.data.description}</p>
+						</div>
+						<span class="writing-language" lang={html_languages[writing.data.lang]}>{language_names[writing.data.lang]} <span aria-hidden="true">↗</span></span>
+					</a>
+				</li>
+			))}
+		</ul>
+		<a class="archive-link mt-6" href={local_path(lang, 'blog')}>{text.all_writing} <span aria-hidden="true">↗</span></a>
+	</section>
+</BaseLayout>
+
+<style>
+	.hero {
+		position: relative;
+		isolation: isolate;
+		/* 对应 main 上方的 mt-12，让背景与上下分隔线保持相同间距。 */
+		margin-bottom: 3rem;
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 1;
+		max-width: 36rem;
+	}
+
+	@media (min-width: 48rem) {
+		.hero-content {
+			width: 60%;
+		}
+	}
+
+	.archive-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		min-height: 2.75rem;
+		font-size: 0.875rem;
+		text-decoration: underline;
+		text-underline-offset: 0.25rem;
+		text-decoration-color: var(--border-color);
+	}
+
+	.writing-item + .writing-item {
+		border-top: 1px solid var(--border-color);
+	}
+
+	.writing-link {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem 2rem;
+		padding-block: 1.5rem;
+	}
+
+	.writing-language {
+		flex-shrink: 0;
+		font-size: 0.875rem;
+		color: var(--text-muted);
+	}
+
+	.archive-link:focus-visible,
+	.writing-link:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 4px;
+	}
+
+	.hero-action {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		font-weight: 500;
+	}
+
+	.hero-action-primary {
+		gap: 0.75rem;
+		padding: 0.625rem 1.25rem;
+		border: 1px solid var(--border-color);
+		border-radius: 0.375rem;
+	}
+
+	.hero-action-secondary {
+		gap: 0.5rem;
+		text-decoration: underline;
+		text-decoration-color: var(--border-color);
+		text-underline-offset: 0.25rem;
+	}
+
+	.hero-action:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 4px;
+	}
+
+	@media (hover: hover) {
+		.archive-link:hover {
+			text-decoration-color: currentColor;
+		}
+
+		.writing-link:hover h3 {
+			text-decoration: underline;
+			text-underline-offset: 0.25rem;
+		}
+
+		.hero-action-primary:hover {
+			background-color: var(--surface-hover);
+		}
+
+		.hero-action-secondary:hover {
+			text-decoration-color: currentColor;
+		}
+	}
+</style>

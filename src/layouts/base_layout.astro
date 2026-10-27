@@ -1,14 +1,29 @@
 ---
 import '../styles/global.css'
+import { html_languages, language_names, languages, local_path, type ContentLanguage } from '../i18n/config';
+import { ui } from '../i18n/ui';
+import Icon from '../components/icon.astro';
 
 interface Props {
-    title: string
+    title: string;
+    description: string;
+    lang: ContentLanguage;
+    section?: 'about' | 'blog' | 'projects';
+    alternates: { lang: ContentLanguage; href: string }[];
+    is_detail?: boolean;
 }
 
-const {title} = Astro.props;
+const { title, description, lang, section, alternates, is_detail = false } = Astro.props;
+const text = ui[lang];
+const language_options = languages.map(language => {
+    const page = alternates.find(candidate => candidate.lang === language);
+    return { lang: language, href: page?.href ?? local_path(language, section), available: !!page };
+});
+const availability = text.versions_available.replace('{available}', String(alternates.length)).replace('{total}', String(languages.length));
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 ---
 
-<html lang="en">
+<html lang={html_languages[lang]}>
 <head>
     <script is:inline>
         const prefersDark = window.matchMedia(
@@ -33,78 +48,83 @@ const {title} = Astro.props;
     <meta name="viewport" content="width=device-width"/>
     <meta name="generator" content={Astro.generator}/>
     <title>{title}</title>
+    <meta name="description" content={description}/>
+    {canonical && <link rel="canonical" href={canonical}/>}
+    {Astro.site && alternates.map(page => (
+        <link rel="alternate" hreflang={html_languages[page.lang]} href={new URL(page.href, Astro.site)}/>
+    ))}
 </head>
 <body class="mx-auto max-w-5xl px-6 py-8">
-    <nav aria-label="Main navigation" class="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-[var(--border-color)] pb-5 text-sm">
-        <a href="/" class="nav-control nav-brand">hana</a>
-        <a href="/about/" class="nav-control nav-link">About</a>
-        <button id="theme-toggle" type="button" class="nav-control theme-toggle ml-auto">
-            Switch Theme
-        </button>
+    <nav aria-label={text.nav_label} class="site-nav">
+        <div class="nav-pages">
+            <a href={local_path(lang)} aria-current={!section ? 'page' : undefined} class="nav-control nav-link nav-brand">hana</a>
+            {(['projects', 'blog', 'about'] as const).map(item => (
+                <a href={local_path(lang, item)} aria-current={section === item ? is_detail ? 'location' : 'page' : undefined} class="nav-control nav-link">{text[item]}</a>
+            ))}
+        </div>
+        <div class="nav-tools">
+            <button id="language-toggle" type="button" popovertarget="language-menu" aria-controls="language-menu" aria-expanded="false"
+                aria-label={`${text.language}${is_detail ? ` · ${availability}` : ''}`} title={`${text.language}${is_detail ? ` · ${availability}` : ''}`} class="icon-button">
+                <Icon name="globe"/>
+                {is_detail && alternates.length < languages.length && <span class="language-count" aria-hidden="true">{alternates.length}/{languages.length}</span>}
+            </button>
+            <button id="theme-toggle" type="button" class="icon-button" aria-label={text.theme} title={text.theme}
+                data-light-label={text.theme_light} data-dark-label={text.theme_dark}>
+                <span class="theme-sun"><Icon name="sun"/></span>
+                <span class="theme-moon"><Icon name="moon"/></span>
+            </button>
+        </div>
     </nav>
+    <div id="language-menu" popover class="language-menu" role="group" aria-label={text.language}>
+        <ul>
+            {language_options.map(option => <li>
+                <a href={option.href} aria-current={option.lang === lang ? 'page' : undefined}
+                    data-translation-status={option.lang === lang ? 'current' : option.available ? 'available' : 'missing'}
+                    title={option.lang === lang ? text.current_language : option.available ? is_detail ? text.translation_available : text.page_available : undefined}
+                    class="language-option">
+                    <span class="language-option-copy">
+                        <span lang={html_languages[option.lang]} class="language-name">{language_names[option.lang]}</span>
+                        {!option.available && <span class="language-status">{text.translation_missing} · {text.browse_language.replace('{section}', section ? text[section] : 'hana')}</span>}
+                    </span>
+                    {option.lang === lang && <Icon name="check" size={16}/>}
+                </a>
+            </li>)}
+        </ul>
+    </div>
 
     <main class="mt-12">
         <slot/>
     </main>
 
-    <script>
-        type Theme = 'light' | 'dark';
-
-        const toggle = document.getElementById('theme-toggle');
-
-        function applyTheme(theme: Theme): void {
-            document.documentElement.dataset.theme = theme;
-            try {
-                localStorage.setItem('theme', theme);
-            } catch { }
-        }
-
-        if (toggle instanceof HTMLButtonElement) {
-            toggle.addEventListener('click', () => {
-                const currentTheme = document.documentElement.dataset.theme;
-                const nextTheme: Theme = currentTheme === 'dark' ? 'light' : 'dark';
-                applyTheme(nextTheme);
-            });
-        }
-    </script>
+    <script>import '../scripts/navigation';</script>
 </body>
 </html>
 
 <style>
-    .nav-control {
-        display: inline-flex;
-        align-items: center;
-        min-height: 2.75rem;
-    }
-
-    .nav-brand {
-        font-weight: 600;
-    }
-
-    .nav-link,
-    .theme-toggle {
-        color: var(--text-muted);
-    }
-
-    .theme-toggle {
-        cursor: pointer;
-        padding-inline: 0.75rem;
-        border-radius: 0.375rem;
-    }
-
-    .nav-control:focus-visible {
-        outline: 2px solid currentColor;
-        outline-offset: 4px;
-    }
-
-    @media (hover: hover) {
-        .nav-link:hover,
-        .theme-toggle:hover {
-            color: var(--text-primary);
-        }
-
-        .theme-toggle:hover {
-            background-color: var(--surface-hover);
-        }
-    }
+    .site-nav { display: flex; align-items: center; justify-content: space-between; gap: .75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; font-size: .875rem; }
+    .nav-pages, .nav-tools { display: flex; align-items: center; }
+    .nav-pages { gap: clamp(.625rem, 2vw, 1.5rem); }
+    .nav-tools { gap: .125rem; flex-shrink: 0; }
+    .nav-control { display: inline-flex; align-items: center; min-height: 2.75rem; }
+    .nav-link { position: relative; color: var(--text-muted); transition: color 150ms; }
+    .nav-brand { font-weight: 500; }
+    .nav-link[aria-current] { color: var(--text-primary); font-weight: 600; }
+    .nav-link[aria-current]::after { content: ''; position: absolute; bottom: 0; inset-inline: 0; height: 2px; border-radius: 2px; background: currentColor; }
+    .icon-button { display: inline-flex; position: relative; align-items: center; justify-content: center; width: 2.5rem; height: 2.75rem; color: var(--text-muted); cursor: pointer; border-radius: .4rem; }
+    .language-count { position: absolute; bottom: -.05rem; right: -.15rem; font-size: .625rem; line-height: 1; padding: .1rem .2rem; border: 1px solid var(--border-color); border-radius: .2rem; background: var(--page-bg); color: var(--text-muted); }
+    .theme-sun { display: none; }
+    :global(:root[data-theme='dark']) .theme-sun { display: inline-flex; }
+    :global(:root[data-theme='dark']) .theme-moon { display: none; }
+    .language-menu { position: fixed; inset: auto; margin: 0; width: min(14rem, calc(100vw - 1.5rem)); padding: .25rem; border: 1px solid var(--border-color); border-radius: .5rem; color: var(--text-primary); background: var(--page-bg); box-shadow: 0 8px 24px #0002; }
+    .language-menu > ul { display: grid; gap: .2rem; }
+    .language-option { display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 2.75rem; padding: .5rem .625rem; border-radius: .3rem; }
+    .language-option-copy { display: grid; gap: .125rem; }
+    .language-name { font-size: .875rem; }
+    .language-status { font-size: .75rem; line-height: 1.5; color: var(--text-muted); }
+    .language-option[aria-current] { background: var(--surface-hover); }
+    .language-option[data-translation-status='missing'] .language-status { text-decoration: underline; text-underline-offset: 3px; }
+    .nav-control:focus-visible, .icon-button:focus-visible, .language-option:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+    @media (hover: hover) { .nav-link:hover, .icon-button:hover { color: var(--text-primary); } .icon-button:hover, .language-option:hover { background: var(--surface-hover); } }
+    @media (max-width: 24rem) { .site-nav { font-size: .8125rem; gap: .5rem; } .nav-pages { gap: .625rem; } .icon-button { width: 2.25rem; } }
+    @media (prefers-reduced-motion: reduce) { .nav-link { transition: none; } }
 </style>

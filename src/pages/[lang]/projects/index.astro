@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../../layouts/base_layout.astro';
+import ProjectCard from '../../../components/project_card.astro';
+import { featured_projects, get_content_url, get_featured_entries, get_localized_entries, get_published_entries } from '../../../lib/content';
+import { html_languages, language_names, languages, local_path, type ContentLanguage } from '../../../i18n/config';
+import { get_tag_label } from '../../../i18n/tags';
+import { ui } from '../../../i18n/ui';
+
+export function getStaticPaths() { return languages.map(lang => ({ params: { lang }, props: { lang } })); }
+interface Props { lang: ContentLanguage }
+const { lang } = Astro.props;
+const text = ui[lang];
+const all_entries = await get_published_entries('projects');
+const featured = get_featured_entries(all_entries, featured_projects, lang);
+const rank = new Map(featured.map((entry, index) => [entry.id, index]));
+const entries = get_localized_entries(all_entries, lang).sort((a, b) =>
+  (rank.get(a.id) ?? featured.length) - (rank.get(b.id) ?? featured.length) || a.data.slug.localeCompare(b.data.slug));
+const alternates = languages.map(language => ({ lang: language, href: local_path(language, 'projects') }));
+---
+<BaseLayout title={`${text.projects} — hana`} description={text.projects_intro} lang={lang} section="projects" alternates={alternates}>
+  <section class="pb-16 pt-4 md:pt-10" aria-labelledby="projects-heading">
+    <h1 id="projects-heading" class="text-4xl font-semibold tracking-tight sm:text-5xl">{text.projects}</h1>
+    <p class="mt-5 leading-relaxed text-[var(--text-muted)]">{text.projects_intro}</p>
+    <ul class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+      {entries.map(entry => <li data-content-id={entry.id} class="grid">
+        <ProjectCard title={entry.data.title} desc={entry.data.description} href={get_content_url(entry)}
+          lang={html_languages[entry.data.lang]} languageLabel={language_names[entry.data.lang]}
+          category={entry.data.tags.map(tag => get_tag_label(tag, lang)).join(' · ')}
+          linkLabel={text.read_project} cover={entry.data.cover} heading_level="h2"/>
+      </li>)}
+    </ul>
+    {entries.length === 0 && <p class="mt-10">{text.empty}</p>}
+  </section>
+</BaseLayout>

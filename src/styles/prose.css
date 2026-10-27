@@ -1,0 +1,36 @@
+.prose { font-size: 1.03125rem; line-height: 1.85; overflow-wrap: anywhere; }
+.prose > * + * { margin-top: 1.25rem; }
+.prose > :first-child { margin-top: 0; }
+.prose p + p { margin-top: 1.25rem; }
+.prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { font-weight: 600; line-height: 1.4; scroll-margin-top: 2rem; }
+.prose h2 { margin-top: 2.75rem; font-size: 1.5rem; }
+.prose h3 { margin-top: 2rem; font-size: 1.2rem; }
+.prose h4 { margin-top: 1.5rem; font-size: 1.1rem; }
+.prose a { text-decoration: underline; text-underline-offset: .2em; }
+.prose img { display: block; width: auto; max-width: 100%; height: auto; margin: 1.5rem auto; }
+.prose pre { padding: 1rem; overflow-x: auto; font-size: .875rem; line-height: 1.7; border: 1px solid var(--border-color); border-radius: .4rem; }
+.prose .astro-code, .prose .astro-code span { color: var(--shiki-light); background-color: var(--shiki-light-bg); }
+:root[data-theme='dark'] .prose .astro-code, :root[data-theme='dark'] .prose .astro-code span { color: var(--shiki-dark); background-color: var(--shiki-dark-bg); }
+.prose .code-block { min-width: 0; border: 1px solid var(--border-color); border-radius: .4rem; overflow: hidden; }
+.prose .code-block pre { margin: 0; border: none; border-radius: 0; }
+.prose .code-toolbar { display: flex; justify-content: space-between; align-items: center; padding: .25rem .8rem; border-bottom: 1px solid var(--border-color); background: var(--surface-hover); font-size: .75rem; line-height: 1.5; color: var(--text-muted); }
+.prose .code-toolbar button { cursor: pointer; padding: .45rem .25rem; min-width: 3rem; }
+.prose .heading-permalink { margin-left: .4em; font-size: .75em; font-weight: 400; color: var(--text-muted); text-decoration: none; opacity: 0; }
+.prose :is(h2,h3,h4,h5,h6):hover .heading-permalink, .prose .heading-permalink:focus-visible { opacity: 1; }
+.prose .image-button { display: block; width: fit-content; max-width: 100%; margin: 1.5rem auto; cursor: zoom-in; border-radius: .2rem; }
+.prose .image-button img { margin: 0; }
+.prose .image-button:focus-visible, .prose .code-toolbar button:focus-visible, .prose .heading-permalink:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.image-viewer-open { overflow: hidden; }
+.prose :not(pre) > code { padding: .1em .3em; background: var(--surface-hover); border-radius: .2em; font-size: .9em; }
+.prose ul, .prose ol { padding-left: 1.5rem; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li + li { margin-top: .4rem; }
+.prose blockquote { padding-left: 1.25rem; border-left: 2px solid var(--border-color, #ddd); color: var(--text-muted, #555); }
+.prose blockquote > * + * { margin-top: .75rem; }
+.prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+.prose th, .prose td { padding: .6rem .85rem; border: 1px solid var(--border-color, #ddd); text-align: left; }
+.prose hr { margin-block: 2rem; border: 0; border-top: 1px solid var(--border-color, #ddd); }
+.prose .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding-block: .25rem; }
+@media (min-width: 48rem) { .prose { font-size: 1.0625rem; line-height: 1.85; } .prose h2 { font-size: 1.6rem; } }
+@media (hover: none) { .prose .heading-permalink { opacity: .55; } }

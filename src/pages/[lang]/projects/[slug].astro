@@ -1,0 +1,17 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import ContentLayout from '../../../layouts/content_layout.astro';
+import { get_published_entries, get_translations } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const entries = await get_published_entries('projects');
+  return entries.map(entry => ({
+    params: { lang: entry.data.lang, slug: entry.data.slug },
+    props: { entry, translations: get_translations(entry, entries) },
+  }));
+}
+interface Props { entry: CollectionEntry<'projects'>; translations: CollectionEntry<'projects'>[] }
+const { entry, translations } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+<ContentLayout entry={entry} translations={translations} headings={headings}><Content/></ContentLayout>
