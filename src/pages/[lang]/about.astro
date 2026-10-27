@@ -3,25 +3,27 @@ import BaseLayout from '../../layouts/base_layout.astro';
 import ContactLinks from '../../components/contact_links.astro';
 import { languages, local_path, type ContentLanguage } from '../../i18n/config';
 import { ui } from '../../i18n/ui';
+import { render_inline_markdown } from '../../lib/inline_markdown';
 export function getStaticPaths() { return languages.map(lang => ({ params: { lang }, props: { lang } })); }
 interface Props { lang: ContentLanguage }
 const { lang } = Astro.props;
 const text = ui[lang];
 const alternates = languages.map(language => ({ lang: language, href: local_path(language, 'about') }));
+const sections = await Promise.all([
+    { title: text.about_page.development_title, paragraphs: text.about_page.development },
+    { title: text.about_page.interests_title, paragraphs: text.about_page.interests },
+    { title: text.about_page.site_title, paragraphs: text.about_page.site },
+].map(async section => ({ ...section, paragraphs: await Promise.all(section.paragraphs.map(render_inline_markdown)) })));
 ---
 
 <BaseLayout title={`${text.about} — hana`} description={text.about_page.intro} lang={lang} section="about" alternates={alternates}>
     <section class="max-w-2xl py-12 md:py-20" aria-labelledby="about-heading">
         <h1 id="about-heading" class="text-5xl font-semibold tracking-tight sm:text-6xl">{text.about_page.title}</h1>
         <p class="mt-6 text-xl leading-relaxed">{text.about_page.intro}</p>
-        {[
-            { title: text.about_page.development_title, paragraphs: text.about_page.development },
-            { title: text.about_page.interests_title, paragraphs: text.about_page.interests },
-            { title: text.about_page.site_title, paragraphs: text.about_page.site },
-        ].map(section => (
+        {sections.map(section => (
             <section class="mt-10">
                 <h2 class="text-xl font-medium tracking-tight">{section.title}</h2>
-                {section.paragraphs.map(paragraph => <p class="mt-4 leading-relaxed text-[var(--text-muted)]">{paragraph}</p>)}
+                {section.paragraphs.map(paragraph => <p class="about-paragraph mt-4 leading-relaxed text-[var(--text-muted)]" set:html={paragraph}/>)}
             </section>
         ))}
 
@@ -34,6 +36,20 @@ const alternates = languages.map(language => ({ lang: language, href: local_path
 </BaseLayout>
 
 <style>
+    .about-paragraph :global(a) {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-decoration-color: var(--text-muted);
+        text-underline-offset: .2em;
+    }
+    .about-paragraph :global(a:focus-visible) {
+        outline: 2px solid var(--text-primary);
+        outline-offset: 4px;
+        text-decoration-color: currentColor;
+    }
+    @media (hover: hover) {
+        .about-paragraph :global(a:hover) { text-decoration-color: var(--text-primary); }
+    }
     .about-link {
         display: inline-flex;
         align-items: center;

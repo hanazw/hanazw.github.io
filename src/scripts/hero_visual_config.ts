@@ -101,7 +101,7 @@ export const heroVisualConfig: HeroVisualConfig = {
         falloff: 6.0, // 越大颜色越集中、分区越明显；越小混合越均匀，保持适中的非负值。
     },
     noise: {
-        scale: 3.0, // 越大地形越碎、画面内起伏越多；越小地形越舒展。取正数。
+        scale: 4.0, // 越大地形越碎、画面内起伏越多；越小地形越舒展。取正数。
         speed: 0.02, // 地形演变速度；0 为静止，鼠标视差仍有效。
         layers: 4, // 正整数：每增加一层，每个片元多计算一次噪声。
         amplitude: 0.5, // 第一层高度幅度；增大也会增加跨过的等高线数量。
@@ -118,8 +118,8 @@ export const heroVisualConfig: HeroVisualConfig = {
         opacity: heroVisualPalettes.light.contourOpacity,
     },
     parallax: {
-        strength: 0.03, // 视差幅度（UV）；0 关闭视差，单轴最大偏移为该值的一半。
-        followSpeed: 3.0, // 越大跟手 / 回正越快，越小越缓慢；取正数。
+        strength: 0.08, // 视差幅度（UV）；0 关闭视差，单轴最大偏移为该值的一半。
+        followSpeed: 2.0, // 越大跟手 / 回正越快，越小越缓慢；取正数。
     },
     rendering: {
         clearColor: [0.0, 0.0, 0.0, 1.0], // 全屏三角形会覆盖整个绘制缓冲区。

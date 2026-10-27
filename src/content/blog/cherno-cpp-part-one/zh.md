@@ -1,6 +1,6 @@
 ---
 title: 「The Cherno-C++」学习笔记一（1-33）
-description: TheCherno的C++系列视频被誉为最好的C++教程之一 这里记录了我的一些笔记与理解，希望对你有帮助😝
+description: TheCherno的C++系列视频被誉为最好的C++教程之一，这里记录了我的一些笔记与理解
 lang: zh
 slug: cherno-cpp-part-one
 tags:

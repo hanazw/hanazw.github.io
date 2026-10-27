@@ -1,6 +1,6 @@
 ---
 title: 「Unity-Input System」学习笔记
-description: Input System是Unity新推出的输入系统(好像也不是很新了) 这里是一些根据官方文档与各类资料整理的其使用方法，希望对你有帮助😋
+description: Input System是Unity新推出的输入系统(好像也不是很新了) 这里是一些根据官方文档与各类资料整理的其使用方法
 lang: zh
 slug: unity-input-system
 translation_key: unity_input_system

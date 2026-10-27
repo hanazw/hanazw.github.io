@@ -73,14 +73,8 @@ if (article) {
   const stage = viewer?.querySelector<HTMLElement>('.image-stage');
   if (viewer && stage) {
     let opener: HTMLButtonElement | undefined;
-    const size_button = viewer.querySelector<HTMLButtonElement>('.image-size');
-    const toggle_size = () => {
-      const expanded = stage.querySelector('img');
-      if (expanded) size_button?.setAttribute('aria-pressed', String(expanded.classList.toggle('actual-size')));
-    };
-    size_button?.addEventListener('click', toggle_size);
     const close = () => viewer.close();
-    viewer.querySelector('button')?.addEventListener('click', close);
+    viewer.querySelector('.image-close')?.addEventListener('click', close);
     viewer.addEventListener('click', event => { if (event.target === viewer) close(); });
     viewer.addEventListener('close', () => {
       document.documentElement.classList.remove('image-viewer-open');
@@ -94,7 +88,6 @@ if (article) {
       button.className = 'image-button';
       const meaningful_alt = image.alt && !/^(?:img|image[-_\d].*)$/i.test(image.alt);
       button.setAttribute('aria-label', `${article.dataset.openImage}${meaningful_alt ? `: ${image.alt}` : ''}`);
-      button.title = article.dataset.openImage!;
       image.before(button);
       button.append(image);
       button.addEventListener('click', () => {
@@ -102,8 +95,6 @@ if (article) {
         const expanded = new Image();
         expanded.src = image.currentSrc || image.src;
         expanded.alt = image.alt;
-        expanded.addEventListener('click', toggle_size);
-        size_button?.setAttribute('aria-pressed', 'false');
         stage.replaceChildren(expanded);
         viewer.showModal();
         document.documentElement.classList.add('image-viewer-open');

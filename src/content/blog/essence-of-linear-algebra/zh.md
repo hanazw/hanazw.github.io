@@ -1,6 +1,6 @@
 ---
 title: 「3B1B-线性代数的本质」学习笔记
-description: 3Blue1Brown的《线性代数的本质》系列视频被誉为最好的线性代数教学视频之一 本文总结了其中的一些知识点与个人的理解，希望对你有帮助😉
+description: 3Blue1Brown的《线性代数的本质》系列视频被誉为最好的线性代数教学视频之一，本文总结了其中的一些知识点与个人的理解
 lang: zh
 slug: essence-of-linear-algebra
 translation_key: essence_of_linear_algebra

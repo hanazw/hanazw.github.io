@@ -1,6 +1,6 @@
 ---
 title: 「C#-泛型约束」学习笔记
-description: 泛型是C#中极其重要的一种特性，善用泛型可以很大程度上提高编写代码的效率 这里总结了泛型约束的一些使用方法，希望对你有帮助🤐
+description: 泛型是C#中极其重要的一种特性，善用泛型可以很大程度上提高编写代码的效率 这里总结了泛型约束的一些使用方法
 lang: zh
 slug: csharp-generic-constraints
 translation_key: csharp_generic_constraints

@@ -46,10 +46,8 @@ const availability = text.versions_available.replace('{available}', String(alter
     <footer class="article-footer"><a class="arrow-link" href={local_path(lang, collection)}><span aria-hidden="true">←</span><span class="arrow-link-label">{collection === 'blog' ? text.back_blog : text.back_projects}</span></a></footer>
   </article>
   <dialog id="image-viewer" class="image-viewer" aria-label={text.open_image}>
-    <button type="button" class="image-close inverse-control" aria-label={text.close_image} title={text.close_image} autofocus><Icon name="close" size={22}/></button>
+    <button type="button" class="image-close" aria-label={text.close_image} autofocus><Icon name="close" size={22}/></button>
     <div class="image-stage"></div>
-    <button type="button" class="image-size inverse-control" aria-pressed="false">{text.original_size}</button>
-    <p class="image-hint">{text.image_hint}</p>
   </dialog>
   <script>import '../scripts/reading';</script>
 </BaseLayout>
@@ -60,15 +58,12 @@ const availability = text.versions_available.replace('{available}', String(alter
   .translation-availability { font-size: .75rem; }
   .prose { min-width: 0; }
   .article-footer { max-width: 42rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: .875rem; color: var(--text-muted); }
-  .image-viewer { width: calc(100vw - 2rem); max-width: 90rem; max-height: calc(100vh - 2rem); margin: auto; padding: 3rem 1rem 1rem; border: 1px solid var(--border-color); border-radius: .6rem; color: var(--text-primary); background: var(--page-bg); }
+  .image-viewer { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 4rem 1rem 1rem; border: 0; overflow: hidden; color: #fff; background: transparent; }
   .image-viewer::backdrop { background: #000b; }
-  .image-stage { max-height: calc(100vh - 11rem); overflow: auto; }
-  .image-stage :global(img) { display: block; width: auto; max-width: 100%; max-height: calc(100vh - 11rem); margin: auto; cursor: zoom-in; }
-  .image-stage :global(img.actual-size) { max-width: none; max-height: none; cursor: zoom-out; }
-  .image-close { position: absolute; top: .25rem; right: .5rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; cursor: pointer; border-radius: .3rem; }
-  .image-hint { margin-top: .75rem; font-size: .75rem; text-align: center; color: var(--text-muted); }
-  .image-size { display: block; padding: .5rem 1rem; margin: .5rem auto 0; border: 1px solid var(--border-color); border-radius: .3rem; font-size: .8125rem; cursor: pointer; }
-  .image-size:where([aria-pressed='true']) { background: var(--surface-hover); }
+  .image-stage { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; pointer-events: none; }
+  .image-stage :global(img) { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; pointer-events: auto; }
+  .image-close { position: absolute; top: .5rem; right: .5rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; cursor: pointer; border-radius: .3rem; }
+  .image-close:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
   @media (min-width: 48rem) { .reading-article { padding-top: 1.5rem; } }
   @media (min-width: 64rem) { .reading-article.has-toc { max-width: 57.5rem; } .reading-body.with-toc { display: grid; grid-template-columns: minmax(0, 42rem) minmax(0, 13rem); gap: 2.5rem; align-items: start; } .with-toc > .prose { grid-column: 1; grid-row: 1; } }
 </style>

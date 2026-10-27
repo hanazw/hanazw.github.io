@@ -1,6 +1,6 @@
 ---
 title: 「游戏编程模式」读书笔记零：目录
-description: 《游戏编程模式》是被许多人所推荐的书，这里是我的读书笔记目录，希望对你有帮助😋
+description: 《游戏编程模式》是被许多人所推荐的书，这里是我的读书笔记目录
 lang: zh
 slug: game-programming-patterns-index
 tags:

@@ -1,6 +1,6 @@
 ---
 title: 「Algorithm4」读书笔记零：目录
-description: 《算法4》是数据结构与算法领域久负盛名的书，这里是我的读书笔记目录，希望对你有帮助😋
+description: 《算法4》是数据结构与算法领域久负盛名的书，这里是我的读书笔记目录
 lang: zh
 slug: algorithms-fourth-edition-index
 tags:

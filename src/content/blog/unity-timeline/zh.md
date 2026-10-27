@@ -1,6 +1,6 @@
 ---
 title: 「Unity-Timeline」学习笔记
-description: Unity中的Timeline是一个强大的可视化工具 这里是一些对其知识点的整理，希望对你有帮助😋
+description: Unity中的Timeline是一个强大的可视化工具，这里是一些对其知识点的整理
 lang: zh
 slug: unity-timeline
 translation_key: unity_timeline
