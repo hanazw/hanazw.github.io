@@ -1,0 +1,55 @@
+---
+import Icon from './icon.astro';
+import type { ContentLanguage } from '../i18n/config';
+import { ui } from '../i18n/ui';
+
+interface Props { lang: ContentLanguage }
+const { lang } = Astro.props;
+const text = ui[lang].contact;
+const emails = [
+  { name: 'Gmail', label: text.personal_email, address: 'hmxsqaq@gmail.com' },
+  { name: 'NYU', label: text.school_email, address: 'zw5390@nyu.edu' },
+];
+---
+
+<div class="contact-links">
+  <a class="contact-control github-link" href="https://github.com/hmxsqaq" aria-label="GitHub">
+    <Icon name="github" />
+    <span class="contact-tooltip" aria-hidden="true">GitHub</span>
+  </a>
+  <div class="email-links">
+    <span class="email-icon" aria-hidden="true"><Icon name="mail" /></span>
+    {emails.map((email, index) => <>
+      {index > 0 && <span class="email-separator" aria-hidden="true">·</span>}
+      <a class="contact-control email-link" href={`mailto:${email.address}`}
+        aria-label={`${email.name} — ${email.label}: ${email.address}`}>
+        {email.name}
+        <span class="contact-tooltip" aria-hidden="true">{email.address}</span>
+      </a>
+    </>)}
+  </div>
+</div>
+
+<style>
+  .contact-links { display: flex; align-items: center; gap: .75rem; }
+  .email-links { display: flex; align-items: center; gap: .125rem; }
+  .email-icon { display: inline-flex; margin-right: .25rem; color: var(--text-secondary); }
+  .email-separator { color: var(--text-muted); }
+  .contact-control { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.75rem; border-radius: .4rem; color: var(--text-muted); font-size: .875rem; line-height: 1.25rem; cursor: pointer; --contact-line-color: transparent; }
+  .contact-control::after { content: ''; position: absolute; top: calc(50% + .65em); height: 1px; background: var(--contact-line-color); pointer-events: none; }
+  .github-link::after { width: 1.1875rem; left: 50%; transform: translateX(-50%); }
+  .email-link { width: auto; padding-inline: .375rem; --contact-line-color: color-mix(in srgb, currentColor 22%, transparent); }
+  .email-link::after { inset-inline: .375rem; }
+  .contact-control:is(:focus-visible, :active) { color: var(--text-primary); --contact-line-color: var(--text-primary); }
+  .contact-control:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 4px; }
+  .contact-tooltip { position: absolute; top: calc(100% + .375rem); left: 50%; transform: translateX(-50%); padding: .25rem .5rem; border: 1px solid var(--panel-border); border-radius: .375rem; background: var(--panel-bg); color: var(--text-primary); font-size: .75rem; line-height: 1.5; white-space: nowrap; pointer-events: none; visibility: hidden; }
+  .contact-control:focus-visible .contact-tooltip { visibility: visible; }
+  @media (hover: hover) {
+    .contact-control:hover { color: var(--text-primary); --contact-line-color: var(--text-primary); }
+    .contact-control:hover .contact-tooltip { visibility: visible; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .contact-control { transition: color 120ms ease; }
+    .contact-control::after { transition: background-color 120ms ease; }
+  }
+</style>

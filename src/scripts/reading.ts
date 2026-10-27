@@ -11,6 +11,7 @@ if (article) {
     language.textContent = pre.dataset.language ?? 'text';
     const copy = document.createElement('button');
     copy.type = 'button';
+    copy.className = 'inverse-control';
     copy.textContent = article.dataset.copy!;
     copy.setAttribute('aria-live', 'polite');
     copy.addEventListener('click', async () => {

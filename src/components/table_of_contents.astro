@@ -28,11 +28,13 @@ for (const heading of headings) {
   details { padding-block: .8rem; border-block: 1px solid var(--border-color); }
   summary { cursor: pointer; color: var(--text-primary); font-weight: 500; }
   nav { margin-top: .8rem; max-height: 60vh; overflow-y: auto; scrollbar-width: thin; }
+  a, summary { text-decoration: underline transparent; text-decoration-thickness: 1px; text-underline-offset: .2em; }
   a { display: block; padding: .35rem .25rem; line-height: 1.5; overflow-wrap: anywhere; }
   a[aria-current] { color: var(--text-primary); font-weight: 500; }
-  a:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+  a:focus-visible { outline: 2px solid var(--text-primary); outline-offset: -2px; text-decoration-color: currentColor; }
+  summary:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 4px; text-decoration-color: currentColor; }
   li > ol { padding-left: .8rem; border-left: 1px solid var(--border-color); margin-left: .25rem; }
   li[data-toc-section]:not([data-active]) > ol { display: none; }
-  @media (hover: hover) { a:hover { color: var(--text-primary); } }
+  @media (hover: hover) { a:hover, summary:hover { text-decoration-color: currentColor; } }
   @media (min-width: 64rem) { .article-toc { grid-column: 2; grid-row: 1; position: sticky; top: 2rem; margin-bottom: 0; } details { padding-top: 0; border: none; } nav { max-height: calc(100vh - 7rem); } }
 </style>

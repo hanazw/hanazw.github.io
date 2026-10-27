@@ -9,16 +9,17 @@ type Dictionary = {
   toc: string; section_link: string; copy: string; copied: string; copy_failed: string;
   open_image: string; close_image: string; image_hint: string; original_size: string;
   projects_intro: string; blog_intro: string; empty: string;
+  contact: { personal_email: string; school_email: string };
   home: { title: string; eyebrow: string; intro: string; description: string; view_projects: string;
-    about_me: string; selected: string; projects_description: string; writing: string; writing_description: string };
-  about_page: { title: string; intro: string; description: string; build_title: string; build: string;
-    explore: string; writing_title: string; writing: string };
+    about_me: string; selected: string; writing: string };
+  about_page: { title: string; intro: string; development_title: string; development: string[];
+    interests_title: string; interests: string[]; site_title: string; site: string[] };
 };
 
 export const ui = {
   en: {
     nav_label: 'Main navigation', about: 'About', projects: 'Projects', blog: 'Blog', theme: 'Switch theme',
-    read_project: 'Read project', all_projects: 'Browse all projects', all_writing: 'Browse all writing',
+    read_project: 'Read project', all_projects: 'All projects', all_writing: 'All writing',
     back_blog: 'All writing', back_projects: 'All projects', published: 'Published', updated: 'Updated',
     language: 'Choose language', current_language: 'Current language', page_available: 'Open in this language', translation_available: 'Translation available',
     translation_missing: 'No translation', browse_language: '{section} →', versions_available: '{available}/{total} languages available',
@@ -27,21 +28,32 @@ export const ui = {
     open_image: 'Enlarge image', close_image: 'Close image', image_hint: 'Click the image to toggle original size. Press Esc to close.', original_size: 'Original size',
     projects_intro: 'Rendering experiments, collaborative games, and procedural worlds.',
     blog_intro: 'Notes on graphics, programming, and game development, in English and Chinese.', empty: 'Nothing published yet.',
+    contact: { personal_email: 'Personal email', school_email: 'School email' },
     home: {
-      title: 'hana — Game Developer', eyebrow: 'Game development · Computer graphics',
-      intro: 'A game developer working with Unity, C++, and computer graphics.',
-      description: 'I’m pursuing a master’s in Computer Science at NYU Courant. Here, I share my projects and write about the technical ideas behind them.',
-      view_projects: 'View Projects', about_me: 'About Me', selected: 'Selected Projects',
-      projects_description: 'Rendering experiments, collaborative games, and procedural worlds.',
-      writing: 'Writing & Notes', writing_description: 'Technical notes in English and Chinese, collected as I learn and build.',
+      title: 'Zehua Wu — hana', eyebrow: 'Game development · Rendering',
+      intro: 'Game developer | MSCS @ New York University',
+      description: 'Focusing on game development and rendering. Here, I share my projects, study notes, and the technical ideas behind them. I hope you find something useful.',
+      view_projects: 'View projects', about_me: 'About me', selected: 'Selected projects',
+      writing: 'Writing & notes',
     },
     about_page: {
-      title: 'Hi, I’m hana.', intro: 'I’m Zehua Wu, a game developer and an M.S. in Computer Science student at NYU Courant.',
-      description: 'My work spans C++ and C#, software rendering, and games built with Unity. I’m interested in computer graphics, interactive media, and how technical systems shape the experience of playing a game.',
-      build_title: 'What I build',
-      build: 'My projects range from a C++ software renderer to collaborative party games and game jam experiments. On AssAssIn, I worked on UI, enemy AI, tutorials, and gameplay feedback. For World Piece, I was the sole programmer on the Unity project.',
-      explore: 'Explore selected projects', writing_title: 'Writing as I learn',
-      writing: 'I keep technical notes in English and Chinese on graphics, programming, and game development. You’ll find my earlier projects and writing under the names hmxs and hmxsqaq.',
+      title: 'About', intro: 'Hi, I’m Zehua Wu. I also go by hana. I’m currently studying for a master’s in Computer Science at NYU Courant, with a focus on game development and rendering.',
+      development_title: 'Development & learning',
+      development: [
+        'I’ve worked on course projects and game jam entries, mainly as a programmer. I’ve used Unity, Unreal, and Godot, and I try different languages and tools depending on the project.',
+        'I also study how images are rendered, through projects such as software renderers and procedural terrain generation. Sometimes I follow a course; other times, I build something small to work through a question. My projects and notes document that process.',
+      ],
+      interests_title: 'Beyond development',
+      interests: [
+        'I enjoy anime and games. Some favorites are 13 Sentinels: Aegis Rim, The Legend of Zelda series, Outer Wilder and CLANNAD. I play a mix of genres and like trying different things. Lately, I’ve been hooked on Overwatch.',
+        'I also enjoy rock, J-pop, and anime music, and collect handheld consoles, physical games, and art books. Away from the computer, I like football and badminton.',
+        'I like organizing things and tinkering with productivity tools and desktop customization. Blogging is part of that habit: collecting scattered ideas and problems into something I can return to later.',
+      ],
+      site_title: 'This site',
+      site: [
+        'This is where I keep my projects and notes on graphics, programming, and game development. Some posts are detailed write-ups; others document a single problem. I’ll keep adding to them as I learn.',
+        'Feel free to call me Zehua or hana, and say hello—whether it’s about tech, games, or an anime recommendation.',
+      ],
     },
   },
   zh: {
@@ -55,21 +67,32 @@ export const ui = {
     open_image: '放大图片', close_image: '关闭图片', image_hint: '点击图片切换原始尺寸，按 Esc 关闭。', original_size: '原始尺寸',
     projects_intro: '渲染实验、合作游戏与程序化世界。',
     blog_intro: '用中文和英文记录图形学、编程与游戏开发中的学习和思考。', empty: '暂无已发布内容。',
+    contact: { personal_email: '个人邮箱', school_email: '学校邮箱' },
     home: {
-      title: 'hana — 游戏开发者', eyebrow: '游戏开发 · 图形学',
-      intro: '一名使用 Unity、C++，探索图形学的游戏开发者。',
-      description: '目前在纽约大学 Courant 研究所攻读计算机科学硕士。在这里分享我的项目，以及它们背后的技术思考。',
+      title: 'Zehua Wu — hana', eyebrow: '游戏开发 · 图形渲染',
+      intro: '游戏开发者 | MSCS @ New York University',
+      description: '聚焦于游戏开发与渲染技术，在这里，我会分享一些我的项目、学习笔记和开发过程中的技术思考，希望对你有所帮助。',
       view_projects: '查看项目', about_me: '关于我', selected: '精选项目',
-      projects_description: '渲染实验、合作游戏与程序化世界。',
-      writing: '文章与笔记', writing_description: '在学习和开发过程中积累的中英文技术笔记。',
+      writing: '文章与笔记',
     },
     about_page: {
-      title: '你好，我是 hana。', intro: '我是 Zehua Wu，一名游戏开发者，目前在纽约大学 Courant 研究所攻读计算机科学硕士。',
-      description: '我的开发工作涉及 C++、C#、软件渲染，以及使用 Unity 制作游戏。我对图形学、交互媒体，以及技术系统如何塑造游戏体验感兴趣。',
-      build_title: '我在做什么',
-      build: '我的项目包括 C++ 软件渲染器、多人派对游戏，以及 Game Jam 作品。在 AssAssIn 中，我负责 UI、敌人 AI、教程和游戏反馈；在 World Piece 团队中，我是唯一的程序员，使用 Unity 实现游戏。',
-      explore: '查看精选项目', writing_title: '边学习，边记录',
-      writing: '我用中文和英文记录图形学、编程与游戏开发方面的技术笔记。此前的项目和文章也曾使用 hmxs、hmxsqaq 这两个名字发布。',
+      title: '关于我', intro: '你好，我是 Zehua Wu，平时也叫 hana。目前在纽约大学 Courant 读计算机科学硕士，主要关注游戏开发和图形渲染。',
+      development_title: '开发与学习',
+      development: [
+        '我参与过一些课程项目和 Game Jam，在团队里主要负责程序开发。用过 Unity、Unreal 和 Godot，也会根据项目尝试不同的语言和工具。',
+        '除了制作游戏，我也在学习画面背后的原理，做过软件渲染器、程序化地形等项目。有时候是跟着课程整理知识，有时候是遇到了一个问题，想自己写点东西弄明白。这里的项目和笔记，也记录了这个过程。',
+      ],
+      interests_title: '屏幕之外',
+      interests: [
+        '我喜欢看动漫、玩游戏。最喜欢的游戏作品是《十三机兵防卫圈》、《塞尔达传说：旷野之息》和《星际拓荒》，最喜欢的动漫是《CLANNAD》。游戏类型玩得比较杂，什么都愿意试一点。最近沉迷《守望先锋》。',
+        '也喜欢听摇滚、J-pop 和动漫音乐，收藏一些掌机、游戏盘和设定集。电脑之外，我还喜欢足球和羽毛球。',
+        '另外，我喜欢整理东西，也喜欢折腾效率工具。写博客算是这种习惯的延伸：把零散的知识和遇到的问题整理下来，之后也方便自己查。',
+      ],
+      site_title: '这个网站',
+      site: [
+        '这里放着我做过的项目，以及图形学、编程和游戏开发方面的学习笔记。有些文章比较完整，有些只是某个问题的记录，我会随着学习继续补充。',
+        '你可以叫我 Zehua，也可以叫我 hana。欢迎聊技术、聊游戏，或者推荐好看的番。',
+      ],
     },
   },
 } satisfies Record<ContentLanguage, Dictionary>;

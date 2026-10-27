@@ -7,7 +7,7 @@ tags:
   - unity
   - game-jam
 draft: false
-cover: https://hmxs-1315810738.cos.ap-shanghai.myqcloud.com/img/202411281437810.png
+cover: https://img.itch.zone/aW1hZ2UvMjkxMTQwMi8xNzQzMTkzMi5wbmc=/original/%2F3X%2FcA.png
 ---
 
 ![](<https://hmxs-1315810738.cos.ap-shanghai.myqcloud.com/img/202411281439687.png>)

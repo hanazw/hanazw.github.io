@@ -8,7 +8,7 @@ tags:
   - unity
   - procedural-generation
 draft: false
-cover: https://hmxs-1315810738.cos.ap-shanghai.myqcloud.com/img/202411281303069.jpg
+cover: https://hmxs-1315810738.cos.ap-shanghai.myqcloud.com/img/202411281353915.png
 ---
 
 ![picture](<https://hmxs-1315810738.cos.ap-shanghai.myqcloud.com/img/202411281303069.jpg>)

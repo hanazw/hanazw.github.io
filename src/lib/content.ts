@@ -5,6 +5,24 @@ export type ContentCollection = 'blog' | 'projects';
 export type ContentEntry = CollectionEntry<ContentCollection>;
 export const featured_projects = ['hmxs-renderer/en', 'assassin/en', 'world-piece/en', 'procedural-terrain/en'];
 export const featured_writings = ['csharp-reflection/en', 'games101-notes/zh'];
+export const project_order = [
+  'hmxs-renderer', 
+  'assassin', 
+  'world-piece', 
+  'procedural-terrain',
+  'lan-chinese-chess', 
+  'just-suck', 
+  'balance-or-die', 
+  'the-nuo-lion',
+  'blitz-boy', 
+  'tiny-renderer', 
+  'blind-trust', 
+  'blow-up-the-balloon',
+  'scp', 
+  'revive', 
+  'escape-from-virus', 
+  'cyberpsychosis',
+];
 
 export function validate_entries(entries: ContentEntry[]): void {
   const urls = new Map<string, string>();

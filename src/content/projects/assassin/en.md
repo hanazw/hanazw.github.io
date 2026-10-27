@@ -7,7 +7,7 @@ translation_key: assassin
 tags:
   - unity
 draft: false
-cover: https://hmxs-1315810738.cos.ap-shanghai.myqcloud.com/img/202407211639045.png
+cover: https://hmxs-1315810738.cos.ap-shanghai.myqcloud.com/img/202407211641044.png
 ---
 
 ![](<https://hmxs-1315810738.cos.ap-shanghai.myqcloud.com/img/202407211639045.png>)

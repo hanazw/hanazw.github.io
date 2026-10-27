@@ -26,7 +26,7 @@ const availability = text.versions_available.replace('{available}', String(alter
     data-copy={text.copy} data-copied={text.copied} data-copy-failed={text.copy_failed}
     data-section-link={text.section_link} data-open-image={text.open_image}>
     <header class="article-header">
-      <a class="text-sm text-[var(--text-muted)] underline underline-offset-4" href={local_path(lang, collection)}>← {collection === 'blog' ? text.back_blog : text.back_projects}</a>
+      <a class="arrow-link text-sm" href={local_path(lang, collection)}><span aria-hidden="true">←</span><span class="arrow-link-label">{collection === 'blog' ? text.back_blog : text.back_projects}</span></a>
       <h1 class="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{data.title}</h1>
       <p class="mt-4 leading-relaxed text-[var(--text-muted)]">{data.description}</p>
       <div class="article-meta">
@@ -35,7 +35,7 @@ const availability = text.versions_available.replace('{available}', String(alter
         {entry.data.updated_date && <span>{text.updated} <time datetime={entry.data.updated_date}>{format_date(entry.data.updated_date, lang)}</time></span>}
       </>}
       {data.tags.map(tag => <span>{get_tag_label(tag, lang)}</span>)}
-      {translations.map(translation => <a href={get_content_url(translation)} lang={html_languages[translation.data.lang]} class="underline underline-offset-4">{language_names[translation.data.lang]} →</a>)}
+      {translations.map(translation => <a href={get_content_url(translation)} lang={html_languages[translation.data.lang]} class="arrow-link"><span class="arrow-link-label">{language_names[translation.data.lang]}</span><span aria-hidden="true">→</span></a>)}
       {alternates.length < languages.length && <span class="translation-availability">{availability}</span>}
       </div>
     </header>
@@ -43,12 +43,12 @@ const availability = text.versions_available.replace('{available}', String(alter
       {has_toc && <TableOfContents headings={headings} label={text.toc}/>}
       <div class="prose"><slot/></div>
     </div>
-    <footer class="article-footer"><a href={local_path(lang, collection)}>← {collection === 'blog' ? text.back_blog : text.back_projects}</a></footer>
+    <footer class="article-footer"><a class="arrow-link" href={local_path(lang, collection)}><span aria-hidden="true">←</span><span class="arrow-link-label">{collection === 'blog' ? text.back_blog : text.back_projects}</span></a></footer>
   </article>
   <dialog id="image-viewer" class="image-viewer" aria-label={text.open_image}>
-    <button type="button" class="image-close" aria-label={text.close_image} title={text.close_image} autofocus><Icon name="close" size={22}/></button>
+    <button type="button" class="image-close inverse-control" aria-label={text.close_image} title={text.close_image} autofocus><Icon name="close" size={22}/></button>
     <div class="image-stage"></div>
-    <button type="button" class="image-size" aria-pressed="false">{text.original_size}</button>
+    <button type="button" class="image-size inverse-control" aria-pressed="false">{text.original_size}</button>
     <p class="image-hint">{text.image_hint}</p>
   </dialog>
   <script>import '../scripts/reading';</script>
@@ -60,20 +60,15 @@ const availability = text.versions_available.replace('{available}', String(alter
   .translation-availability { font-size: .75rem; }
   .prose { min-width: 0; }
   .article-footer { max-width: 42rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: .875rem; color: var(--text-muted); }
-  .article-footer a { text-decoration: underline; text-underline-offset: .25em; }
-  .article-footer a:focus-visible, .article-meta a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .image-viewer { width: calc(100vw - 2rem); max-width: 90rem; max-height: calc(100vh - 2rem); margin: auto; padding: 3rem 1rem 1rem; border: 1px solid var(--border-color); border-radius: .6rem; color: var(--text-primary); background: var(--page-bg); }
   .image-viewer::backdrop { background: #000b; }
   .image-stage { max-height: calc(100vh - 11rem); overflow: auto; }
   .image-stage :global(img) { display: block; width: auto; max-width: 100%; max-height: calc(100vh - 11rem); margin: auto; cursor: zoom-in; }
   .image-stage :global(img.actual-size) { max-width: none; max-height: none; cursor: zoom-out; }
   .image-close { position: absolute; top: .25rem; right: .5rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; cursor: pointer; border-radius: .3rem; }
-  .image-close:hover { background: var(--surface-hover); }
-  .image-close:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
   .image-hint { margin-top: .75rem; font-size: .75rem; text-align: center; color: var(--text-muted); }
   .image-size { display: block; padding: .5rem 1rem; margin: .5rem auto 0; border: 1px solid var(--border-color); border-radius: .3rem; font-size: .8125rem; cursor: pointer; }
-  .image-size[aria-pressed='true'] { background: var(--surface-hover); }
-  .image-size:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .image-size:where([aria-pressed='true']) { background: var(--surface-hover); }
   @media (min-width: 48rem) { .reading-article { padding-top: 1.5rem; } }
   @media (min-width: 64rem) { .reading-article.has-toc { max-width: 57.5rem; } .reading-body.with-toc { display: grid; grid-template-columns: minmax(0, 42rem) minmax(0, 13rem); gap: 2.5rem; align-items: start; } .with-toc > .prose { grid-column: 1; grid-row: 1; } }
 </style>

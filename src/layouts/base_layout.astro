@@ -64,24 +64,25 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
         </div>
         <div class="nav-tools">
             <button id="language-toggle" type="button" popovertarget="language-menu" aria-controls="language-menu" aria-expanded="false"
-                aria-label={`${text.language}${is_detail ? ` · ${availability}` : ''}`} title={`${text.language}${is_detail ? ` · ${availability}` : ''}`} class="icon-button">
+                aria-label={`${text.language}${is_detail ? ` · ${availability}` : ''}`} title={`${text.language}${is_detail ? ` · ${availability}` : ''}`} class="icon-button inverse-control">
                 <Icon name="globe"/>
                 {is_detail && alternates.length < languages.length && <span class="language-count" aria-hidden="true">{alternates.length}/{languages.length}</span>}
             </button>
-            <button id="theme-toggle" type="button" class="icon-button" aria-label={text.theme} title={text.theme}
-                data-light-label={text.theme_light} data-dark-label={text.theme_dark}>
+            <button id="theme-toggle" type="button" aria-label={text.theme} title={text.theme}
+                data-light-label={text.theme_light} data-dark-label={text.theme_dark} class="icon-button inverse-control">
                 <span class="theme-sun"><Icon name="sun"/></span>
                 <span class="theme-moon"><Icon name="moon"/></span>
             </button>
         </div>
     </nav>
-    <div id="language-menu" popover class="language-menu" role="group" aria-label={text.language}>
+    <div id="language-menu" popover class="language-menu" role="group" aria-label={text.language}
+        data-has-missing={language_options.some(option => !option.available) || undefined}>
         <ul>
             {language_options.map(option => <li>
                 <a href={option.href} aria-current={option.lang === lang ? 'page' : undefined}
                     data-translation-status={option.lang === lang ? 'current' : option.available ? 'available' : 'missing'}
                     title={option.lang === lang ? text.current_language : option.available ? is_detail ? text.translation_available : text.page_available : undefined}
-                    class="language-option">
+                    class="language-option inverse-control">
                     <span class="language-option-copy">
                         <span lang={html_languages[option.lang]} class="language-name">{language_names[option.lang]}</span>
                         {!option.available && <span class="language-status">{text.translation_missing} · {text.browse_language.replace('{section}', section ? text[section] : 'hana')}</span>}
@@ -106,25 +107,26 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
     .nav-pages { gap: clamp(.625rem, 2vw, 1.5rem); }
     .nav-tools { gap: .125rem; flex-shrink: 0; }
     .nav-control { display: inline-flex; align-items: center; min-height: 2.75rem; }
-    .nav-link { position: relative; color: var(--text-muted); transition: color 150ms; }
+    .nav-link { position: relative; color: var(--text-muted); transition: color 120ms; }
     .nav-brand { font-weight: 500; }
     .nav-link[aria-current] { color: var(--text-primary); font-weight: 600; }
     .nav-link[aria-current]::after { content: ''; position: absolute; bottom: 0; inset-inline: 0; height: 2px; border-radius: 2px; background: currentColor; }
-    .icon-button { display: inline-flex; position: relative; align-items: center; justify-content: center; width: 2.5rem; height: 2.75rem; color: var(--text-muted); cursor: pointer; border-radius: .4rem; }
-    .language-count { position: absolute; bottom: -.05rem; right: -.15rem; font-size: .625rem; line-height: 1; padding: .1rem .2rem; border: 1px solid var(--border-color); border-radius: .2rem; background: var(--page-bg); color: var(--text-muted); }
+    .icon-button { display: inline-flex; position: relative; align-items: center; justify-content: center; width: 2.5rem; height: 2.75rem; color: var(--control-color, var(--text-muted)); cursor: pointer; border-radius: .4rem; }
+    .language-count { position: absolute; bottom: -.05rem; right: -.15rem; font-size: .625rem; line-height: 1; padding: .1rem .2rem; border: 1px solid currentColor; border-radius: .2rem; background: var(--control-background, var(--page-bg)); color: var(--control-muted, var(--text-muted)); }
     .theme-sun { display: none; }
     :global(:root[data-theme='dark']) .theme-sun { display: inline-flex; }
     :global(:root[data-theme='dark']) .theme-moon { display: none; }
-    .language-menu { position: fixed; inset: auto; margin: 0; width: min(14rem, calc(100vw - 1.5rem)); padding: .25rem; border: 1px solid var(--border-color); border-radius: .5rem; color: var(--text-primary); background: var(--page-bg); box-shadow: 0 8px 24px #0002; }
-    .language-menu > ul { display: grid; gap: .2rem; }
-    .language-option { display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 2.75rem; padding: .5rem .625rem; border-radius: .3rem; }
-    .language-option-copy { display: grid; gap: .125rem; }
+    .language-menu { position: fixed; inset: auto; margin: 0; width: min(11rem, calc(100vw - 1.5rem)); padding: .375rem; border: 1px solid var(--panel-border); border-radius: .625rem; color: var(--text-primary); background: var(--panel-bg); box-shadow: var(--panel-shadow); }
+    .language-menu[data-has-missing] { width: min(13rem, calc(100vw - 1.5rem)); }
+    .language-menu > ul { display: grid; gap: .125rem; }
+    .language-option { display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 2.75rem; padding: .5rem .75rem; border-radius: .375rem; }
+    .language-option-copy { display: grid; gap: .125rem; min-width: 0; }
     .language-name { font-size: .875rem; }
-    .language-status { font-size: .75rem; line-height: 1.5; color: var(--text-muted); }
-    .language-option[aria-current] { background: var(--surface-hover); }
-    .language-option[data-translation-status='missing'] .language-status { text-decoration: underline; text-underline-offset: 3px; }
-    .nav-control:focus-visible, .icon-button:focus-visible, .language-option:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-    @media (hover: hover) { .nav-link:hover, .icon-button:hover { color: var(--text-primary); } .icon-button:hover, .language-option:hover { background: var(--surface-hover); } }
+    .language-status { font-size: .75rem; line-height: 1.5; color: var(--control-muted, var(--text-muted)); }
+    .language-option[aria-current] { font-weight: 500; }
+    .nav-control:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 4px; }
+    .nav-link:not([aria-current]):focus-visible { color: var(--nav-hover); }
+    @media (hover: hover) { .nav-link:not([aria-current]):hover { color: var(--nav-hover); } }
     @media (max-width: 24rem) { .site-nav { font-size: .8125rem; gap: .5rem; } .nav-pages { gap: .625rem; } .icon-button { width: 2.25rem; } }
     @media (prefers-reduced-motion: reduce) { .nav-link { transition: none; } }
 </style>
