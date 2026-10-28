@@ -33,7 +33,7 @@ export const ui = {
     contact: { personal_email: 'Personal email', school_email: 'School email' },
     home: {
       title: 'hana\'s site', eyebrow: 'Game development · Rendering',
-      intro: 'Game developer   |   MSCS @ New York University',
+      intro: 'Game Developer   |   MSCS @ New York University',
       description: 'Focusing on game development and rendering.\nHere, I share my projects, study notes, and the technical ideas behind them. I hope you find something useful.',
       view_projects: 'View projects', selected: 'Selected projects',
       writing: 'Writing & notes',
