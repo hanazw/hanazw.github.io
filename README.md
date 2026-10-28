@@ -34,7 +34,7 @@ The workflow runs on pushes to `main` and can also be started manually with **Ru
 
 Build output stays out of Git; no separate branch of generated files is needed. The workflow uses GitHub's built-in token, with Pages deployment permissions limited to the deploy job. This setup does not require a custom domain or a `CNAME` file.
 
-The root URL opens the English homepage at `/en/`; the Chinese homepage is at `/zh/`. Resume links continue to open the language-specific PDFs hosted on COS.
+The root URL directly serves the English homepage without a browser redirect. It shares the same page source and canonical URL as `/en/`; the Chinese homepage is at `/zh/`. Resume links continue to open the language-specific PDFs hosted on COS.
 
 Official references: [Astro on GitHub Pages](https://docs.astro.build/en/guides/deploy/github/) and [GitHub Pages workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 

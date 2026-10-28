@@ -12,7 +12,7 @@ export default defineConfig({
   i18n: {
     locales: [...languages],
     defaultLocale: default_language,
-    // The root page owns its redirect, so static output has a single root route.
+    // The root page renders the default locale without a browser redirect.
     routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
   },
   markdown: {

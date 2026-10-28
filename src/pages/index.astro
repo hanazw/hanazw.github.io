@@ -1,5 +1,5 @@
 ---
 import { default_language, local_path } from '../i18n/config';
-// Static hosts need a permanent redirect to generate a zero-delay refresh.
-return Astro.redirect(local_path(default_language), 301);
+// Render the default homepage into / at build time, without a browser redirect.
+return Astro.rewrite(local_path(default_language));
 ---
