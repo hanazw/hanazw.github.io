@@ -8,11 +8,9 @@ interface Props {
     languageLabel?: string;
     cover?: string;
     cover_position?: 'center' | 'bottom';
-    heading_level?: 'h2' | 'h3';
 }
 
 const { title, desc, href, category, lang, languageLabel, cover, cover_position = 'center' } = Astro.props;
-const Heading = Astro.props.heading_level ?? 'h3';
 ---
 
 <a href={href} class="project-card content-link">
@@ -24,7 +22,7 @@ const Heading = Astro.props.heading_level ?? 'h3';
             <span>{category}</span>
             {languageLabel && <span lang={lang}>{languageLabel}</span>}
         </p>
-        <Heading lang={lang} class="link-title mt-2 text-xl font-medium tracking-tight">{title}</Heading>
+        <h2 lang={lang} class="link-title mt-2 text-xl font-medium tracking-tight">{title}</h2>
         <p lang={lang} class="mt-2 leading-relaxed text-[var(--text-muted)]">{desc}</p>
     </div>
 </a>

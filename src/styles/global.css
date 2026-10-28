@@ -54,9 +54,9 @@ body {
     text-decoration-thickness: 1px;
     text-underline-offset: .2em;
     text-decoration-skip-ink: auto;
+    text-decoration-color: transparent;
 }
 
-.link-title { text-decoration-color: transparent; }
 .arrow-link {
     position: relative;
     display: inline-flex;
@@ -79,7 +79,7 @@ body {
 .arrow-link:focus-visible { --arrow-line-color: var(--text-primary); }
 .arrow-link:focus-visible > :is(.arrow-link-label, [aria-hidden]) { color: var(--text-primary); }
 
-:where(.content-link, .arrow-link, .inverse-control):focus-visible {
+:where(.content-link, .arrow-link):focus-visible {
     outline: 2px solid var(--text-primary);
     outline-offset: 4px;
 }

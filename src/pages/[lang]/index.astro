@@ -6,6 +6,7 @@ import { featured_projects, featured_writings, get_content_url, get_featured_ent
 import { html_languages, language_names, languages, local_path, type ContentLanguage } from '../../i18n/config';
 import { get_tag_label } from '../../i18n/tags';
 import { ui } from '../../i18n/ui';
+import { resume_urls } from '../../lib/resume';
 
 export function getStaticPaths() { return languages.map(lang => ({ params: { lang }, props: { lang } })); }
 interface Props { lang: ContentLanguage }
@@ -40,10 +41,10 @@ const alternates = languages.map(language => ({ lang: language, href: local_path
 					<span class="hero-language-reserve" lang="en" aria-hidden="true"><span class="hero-action arrow-link"><span>{hero_reserve.view_projects}</span><span>↓</span></span></span>
 				</span>
 				<span class="hero-action-slot hero-language-slot">
-					<a href={local_path(lang, 'about')} class="hero-action arrow-link">
-						<span class="arrow-link-label">{text.home.about_me}</span><span aria-hidden="true">↗</span>
+					<a href={resume_urls[lang]} target="_blank" rel="noopener noreferrer" class="hero-action arrow-link" aria-label={text.view_resume}>
+						<span class="arrow-link-label">{text.resume}</span><span aria-hidden="true">↗</span>
 					</a>
-					<span class="hero-language-reserve" lang="en" aria-hidden="true"><span class="hero-action arrow-link"><span>{hero_reserve.about_me}</span><span>↗</span></span></span>
+					<span class="hero-language-reserve" lang="en" aria-hidden="true"><span class="hero-action arrow-link"><span>{ui.en.resume}</span><span>↗</span></span></span>
 				</span>
 				<ContactLinks lang={lang} />
 			</div>
@@ -56,7 +57,7 @@ const alternates = languages.map(language => ({ lang: language, href: local_path
 			<a class="archive-link arrow-link" href={local_path(lang, 'projects')}><span class="arrow-link-label">{text.all_projects}</span><span aria-hidden="true">↗</span></a>
 		</div>
 
-		<ul class="selected-projects mt-5">
+		<ul class="mt-5">
 			{projects.map((project) => (
 				<li>
 					<a href={get_content_url(project)} class="selected-project content-link">
@@ -83,9 +84,9 @@ const alternates = languages.map(language => ({ lang: language, href: local_path
 			<h2 id="writing-heading" class="text-2xl font-semibold tracking-tight">{text.home.writing}</h2>
 			<a class="archive-link arrow-link" href={local_path(lang, 'blog')}><span class="arrow-link-label">{text.all_writing}</span><span aria-hidden="true">↗</span></a>
 		</div>
-		<ul class="writing-list mt-5">
+		<ul class="mt-5">
 			{writings.map((writing) => (
-				<li class="writing-item">
+				<li>
 					<a href={get_content_url(writing)} class="writing-link content-link">
 						<div>
 							<h3 lang={html_languages[writing.data.lang]} class="link-title text-lg font-medium">{writing.data.title}</h3>
@@ -150,9 +151,6 @@ const alternates = languages.map(language => ({ lang: language, href: local_path
 	}
 
 	.archive-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
 		min-height: 2.75rem;
 		font-size: 0.875rem;
 	}
@@ -265,8 +263,6 @@ const alternates = languages.map(language => ({ lang: language, href: local_path
 	}
 
 	.hero-action {
-		display: inline-flex;
-		align-items: center;
 		min-height: 2.75rem;
 		font-size: 0.875rem;
 		line-height: 1.25rem;

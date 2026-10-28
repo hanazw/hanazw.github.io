@@ -1,7 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { default_language, languages, type ContentLanguage } from '../i18n/config';
 
-export type ContentCollection = 'blog' | 'projects';
+type ContentCollection = 'blog' | 'projects';
 export type ContentEntry = CollectionEntry<ContentCollection>;
 export const featured_projects = ['hmxs-renderer/en', 'assassin/en', 'world-piece/en', 'procedural-terrain/en'];
 export const featured_writings = ['csharp-reflection/en', 'games101-notes/zh'];
@@ -24,7 +24,7 @@ export const project_order = [
   'cyberpsychosis',
 ];
 
-export function validate_entries(entries: ContentEntry[]): void {
+function validate_entries(entries: ContentEntry[]): void {
   const urls = new Map<string, string>();
   const translations = new Map<string, string>();
   for (const entry of entries) {
@@ -53,7 +53,7 @@ export function get_content_url(entry: ContentEntry): string {
   return `/${entry.data.lang}/${entry.collection}/${entry.data.slug}/`;
 }
 
-export function get_translation<T extends ContentEntry>(entry: T, entries: T[], lang: ContentLanguage): T | undefined {
+function get_translation<T extends ContentEntry>(entry: T, entries: T[], lang: ContentLanguage): T | undefined {
   if (entry.data.draft || !entry.data.translation_key) return undefined;
   return entries.find(candidate => !candidate.data.draft && candidate.collection === entry.collection
     && candidate.data.translation_key === entry.data.translation_key && candidate.data.lang === lang);

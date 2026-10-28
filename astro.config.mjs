@@ -7,6 +7,7 @@ import { languages, default_language } from './src/i18n/config.ts';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://hanazw.github.io',
   trailingSlash: 'always',
   i18n: {
     locales: [...languages],

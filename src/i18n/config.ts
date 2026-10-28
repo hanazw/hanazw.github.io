@@ -1,4 +1,4 @@
-export const locale_config = {
+const locale_config = {
   en: { html: 'en', name: 'English' },
   zh: { html: 'zh-CN', name: '中文' },
 } as const;

@@ -26,7 +26,7 @@ const alternates = languages.map(language => ({ lang: language, href: local_path
           lang={html_languages[entry.data.lang]} languageLabel={language_names[entry.data.lang]}
           category={entry.data.tags.map(tag => get_tag_label(tag, lang)).join(' · ')}
           cover={entry.data.cover}
-          cover_position={entry.data.slug === 'hmxs-renderer' ? 'bottom' : 'center'} heading_level="h2"/>
+          cover_position={entry.data.slug === 'hmxs-renderer' ? 'bottom' : 'center'}/>
       </li>)}
     </ul>
     {entries.length === 0 && <p class="mt-10">{text.empty}</p>}

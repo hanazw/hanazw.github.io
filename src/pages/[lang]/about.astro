@@ -4,6 +4,7 @@ import ContactLinks from '../../components/contact_links.astro';
 import { languages, local_path, type ContentLanguage } from '../../i18n/config';
 import { ui } from '../../i18n/ui';
 import { render_inline_markdown } from '../../lib/inline_markdown';
+import { resume_urls } from '../../lib/resume';
 export function getStaticPaths() { return languages.map(lang => ({ params: { lang }, props: { lang } })); }
 interface Props { lang: ContentLanguage }
 const { lang } = Astro.props;
@@ -20,6 +21,7 @@ const sections = await Promise.all([
     <section class="max-w-2xl py-12 md:py-20" aria-labelledby="about-heading">
         <h1 id="about-heading" class="text-5xl font-semibold tracking-tight sm:text-6xl">{text.about_page.title}</h1>
         <p class="mt-6 text-xl leading-relaxed">{text.about_page.intro}</p>
+        <a class="about-link arrow-link mt-4" href={resume_urls[lang]} target="_blank" rel="noopener noreferrer"><span class="arrow-link-label">{text.view_resume}</span><span aria-hidden="true">↗</span></a>
         {sections.map(section => (
             <section class="mt-10">
                 <h2 class="text-xl font-medium tracking-tight">{section.title}</h2>
@@ -51,9 +53,6 @@ const sections = await Promise.all([
         .about-paragraph :global(a:hover) { text-decoration-color: var(--text-primary); }
     }
     .about-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
         min-height: 2.75rem;
         font-size: 0.875rem;
         color: var(--text-secondary);

@@ -35,5 +35,5 @@
 .prose th, .prose td { padding: .6rem .85rem; border: 1px solid var(--border-color, #ddd); text-align: left; }
 .prose hr { margin-block: 2rem; border: 0; border-top: 1px solid var(--border-color, #ddd); }
 .prose .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding-block: .25rem; }
-@media (min-width: 48rem) { .prose { font-size: 1.0625rem; line-height: 1.85; } .prose h2 { font-size: 1.6rem; } }
+@media (min-width: 48rem) { .prose { font-size: 1.0625rem; } .prose h2 { font-size: 1.6rem; } }
 @media (hover: none) { .prose .heading-permalink { opacity: .55; } }

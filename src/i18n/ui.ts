@@ -2,7 +2,8 @@ import type { ContentLanguage } from './config';
 
 type Dictionary = {
   nav_label: string; about: string; projects: string; blog: string; theme: string;
-  read_project: string; all_projects: string; all_writing: string;
+  resume: string; view_resume: string;
+  all_projects: string; all_writing: string;
   back_blog: string; back_projects: string; published: string; updated: string;
   language: string; current_language: string; page_available: string; translation_available: string; translation_missing: string;
   browse_language: string; versions_available: string; theme_light: string; theme_dark: string;
@@ -11,7 +12,7 @@ type Dictionary = {
   projects_intro: string; blog_intro: string; empty: string;
   contact: { personal_email: string; school_email: string };
   home: { title: string; eyebrow: string; intro: string; description: string; view_projects: string;
-    about_me: string; selected: string; writing: string };
+    selected: string; writing: string };
   about_page: { title: string; intro: string; development_title: string; development: string[];
     interests_title: string; interests: string[]; site_title: string; site: string[] };
 };
@@ -19,7 +20,8 @@ type Dictionary = {
 export const ui = {
   en: {
     nav_label: 'Main navigation', about: 'About', projects: 'Projects', blog: 'Blog', theme: 'Switch theme',
-    read_project: 'Read project', all_projects: 'All projects', all_writing: 'All writing',
+    resume: 'Resume', view_resume: 'View resume (PDF)',
+    all_projects: 'All projects', all_writing: 'All writing',
     back_blog: 'All writing', back_projects: 'All projects', published: 'Published', updated: 'Updated',
     language: 'Choose language', current_language: 'Current language', page_available: 'Open in this language', translation_available: 'Translation available',
     translation_missing: 'No translation', browse_language: '{section} →', versions_available: '{available}/{total} languages available',
@@ -30,10 +32,10 @@ export const ui = {
     blog_intro: 'Notes on graphics, programming, and game development.', empty: 'Nothing published yet.',
     contact: { personal_email: 'Personal email', school_email: 'School email' },
     home: {
-      title: 'Zehua Wu — hana', eyebrow: 'Game development · Rendering',
+      title: 'hana\'s site', eyebrow: 'Game development · Rendering',
       intro: 'Game developer   |   MSCS @ New York University',
       description: 'Focusing on game development and rendering.\nHere, I share my projects, study notes, and the technical ideas behind them. I hope you find something useful.',
-      view_projects: 'View projects', about_me: 'About me', selected: 'Selected projects',
+      view_projects: 'View projects', selected: 'Selected projects',
       writing: 'Writing & notes',
     },
     about_page: {
@@ -58,7 +60,8 @@ export const ui = {
   },
   zh: {
     nav_label: '主导航', about: '关于', projects: '项目', blog: '博客', theme: '切换主题',
-    read_project: '阅读项目介绍', all_projects: '全部项目', all_writing: '全部文章',
+    resume: '简历', view_resume: '查看简历（PDF）',
+    all_projects: '全部项目', all_writing: '全部文章',
     back_blog: '全部文章', back_projects: '全部项目', published: '发布于', updated: '更新于',
     language: '选择语言', current_language: '当前语言', page_available: '切换到此语言', translation_available: '已有译文',
     translation_missing: '暂无译文', browse_language: '{section} →', versions_available: '提供 {available}/{total} 种语言版本',
@@ -69,10 +72,10 @@ export const ui = {
     blog_intro: '记录图形学、编程与游戏开发中的学习和思考。', empty: '暂无已发布内容。',
     contact: { personal_email: '个人邮箱', school_email: '学校邮箱' },
     home: {
-      title: 'Zehua Wu — hana', eyebrow: '游戏开发 · 图形渲染',
+      title: 'hana的个人网站', eyebrow: '游戏开发 · 图形渲染',
       intro: '游戏开发者   |   MSCS @ New York University',
       description: '聚焦于游戏开发与渲染技术。\n在这里，我会分享一些我的项目、学习笔记和开发过程中的技术思考，希望对你有所帮助。',
-      view_projects: '查看项目', about_me: '关于我', selected: '精选项目',
+      view_projects: '查看项目', selected: '精选项目',
       writing: '文章与笔记',
     },
     about_page: {
