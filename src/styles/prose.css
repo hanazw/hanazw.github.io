@@ -11,6 +11,7 @@
 @media (hover: hover) { .prose a:hover { text-decoration-color: currentColor; } }
 .prose img { display: block; width: auto; max-width: 100%; height: auto; margin: 1.5rem auto; }
 .prose pre { padding: 1rem; overflow-x: auto; font-size: .875rem; line-height: 1.7; border: 1px solid var(--border-color); border-radius: .4rem; }
+.prose :is(pre, code) { font-variant-ligatures: none; }
 .prose .astro-code, .prose .astro-code span { color: var(--shiki-light); background-color: var(--shiki-light-bg); }
 :root[data-theme='dark'] .prose .astro-code, :root[data-theme='dark'] .prose .astro-code span { color: var(--shiki-dark); background-color: var(--shiki-dark-bg); }
 .prose .code-block { min-width: 0; border: 1px solid var(--border-color); border-radius: .4rem; overflow: hidden; }
