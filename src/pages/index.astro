@@ -1,4 +1,5 @@
 ---
 import { default_language, local_path } from '../i18n/config';
-return Astro.redirect(local_path(default_language), 302);
+// Static hosts need a permanent redirect to generate a zero-delay refresh.
+return Astro.redirect(local_path(default_language), 301);
 ---
